@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuestionarios de Evaluación Inicial - Blueberry Group Corp.</title>
+<style>
+  :root {
+    --color-principal: #2862b9;
+    --color-acento: #4d9a4e;
+    --color-secundario: #1c4583;
+    --color-fondo: #ffffff;
+    --color-tarjeta: #ffffff;
+    --color-borde: #d0d9e8;
+    --color-texto: #1c4583;
+    --color-texto-suave: #4a5d7a;
+    --color-exito: #4d9a4e;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 24px;
+    font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background: var(--color-fondo);
+    color: var(--color-texto);
+    line-height: 1.5;
+  }
+
+  header.encabezado {
+    max-width: 900px;
+    margin: 0 auto 24px auto;
+    padding: 24px;
+    background: var(--color-principal);
+    color: #ffffff;
+    border-radius: 8px;
+  }
+
+  header.encabezado .marca {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--color-acento);
+    display: inline-block;
+  }
+
+  header.encabezado h1 {
+    margin: 0 0 8px 0;
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  header.encabezado p {
+    margin: 0;
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  section.cuestionario {
+    background: var(--color-tarjeta);
+    border: 1px solid var(--color-borde);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  section.cuestionario h2 {
+    margin: 0 0 8px 0;
+    font-size: 20px;
+    color: var(--color-principal);
+    border-bottom: 2px solid var(--color-acento);
+    padding-bottom: 8px;
+  }
+
+  section.cuestionario .instruccion {
+    background: #eef4fc;
+    border-left: 4px solid var(--color-acento);
+    padding: 12px 16px;
+    margin: 12px 0 20px 0;
+    font-size: 14px;
+    color: var(--color-texto-suave);
+    border-radius: 4px;
+  }
+
+  .campo {
+    margin-bottom: 20px;
+  }
+
+  .campo label.titulo {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 6px;
+    font-size: 15px;
+    color: var(--color-secundario);
+  }
+
+  .campo .ayuda {
+    display: block;
+    font-size: 13px;
+    color: var(--color-texto-suave);
+    margin-bottom: 8px;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #ffffff;
+    color: var(--color-texto);
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--color-acento);
+    box-shadow: 0 0 0 3px rgba(77, 154, 78, 0.15);
+  }
+
+  textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+
+  table.matriz {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    margin-top: 8px;
+  }
+
+  table.matriz thead th {
+    background: var(--color-principal);
+    color: #ffffff;
+    padding: 10px 8px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  table.matriz thead th:first-child {
+    text-align: left;
+  }
+
+  table.matriz tbody td {
+    padding: 10px 8px;
+    border-bottom: 1px solid var(--color-borde);
+    text-align: center;
+  }
+
+  table.matriz tbody td:first-child {
+    text-align: left;
+  }
+
+  table.matriz tbody tr:nth-child(even) {
+    background: #f8fafd;
+  }
+
+  table.matriz input[type="radio"] {
+    transform: scale(1.2);
+    cursor: pointer;
+    accent-color: var(--color-acento);
+  }
+
+  .opciones-verticales label {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    margin-bottom: 6px;
+    border: 1px solid var(--color-borde);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+
+  .opciones-verticales label:hover {
+    background: #eef4fc;
+    border-color: var(--color-acento);
+  }
+
+  .opciones-verticales input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.15);
+    accent-color: var(--color-acento);
+  }
+
+  .acciones {
+    max-width: 900px;
+    margin: 0 auto 40px auto;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  button {
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  button.primario {
+    background: var(--color-acento);
+    color: #ffffff;
+  }
+
+  button.primario:hover {
+    background: #3d7d3e;
+  }
+
+  button.secundario {
+    background: #ffffff;
+    color: var(--color-principal);
+    border: 1px solid var(--color-borde);
+  }
+
+  button.secundario:hover {
+    background: #eef4fc;
+  }
+
+  button.exportar {
+    background: var(--color-principal);
+    color: #ffffff;
+  }
+
+  button.exportar:hover {
+    background: #1c4583;
+  }
+
+  .aviso-exito {
+    max-width: 900px;
+    margin: 0 auto 20px auto;
+    padding: 12px 16px;
+    background: #e8f3ec;
+    border-left: 4px solid var(--color-exito);
+    color: var(--color-exito);
+    border-radius: 4px;
+    font-size: 14px;
+    display: none;
+  }
+
+  .aviso-exito.activo {
+    display: block;
+  }
+
+  @media print {
+    body {
+      background: #ffffff;
+      padding: 0;
+    }
+
+    header.encabezado {
+      background: #ffffff;
+      color: #000000;
+      border-bottom: 2px solid #000000;
+      border-radius: 0;
+      padding: 16px 0;
+    }
+
+    header.encabezado .marca {
+      color: #000000;
+      border-bottom-color: #000000;
+    }
+
+    .acciones {
+      display: none;
+    }
+
+    section.cuestionario {
+      border: none;
+      padding: 16px 0;
+      page-break-inside: avoid;
+    }
+
+    table.matriz thead th {
+      background: #dddddd !important;
+      color: #000000 !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="encabezado">
+  <div class="marca">Blueberry Group Corp.</div>
+  <h1>Cuestionarios de Evaluación Inicial</h1>
+  <p>Programa de IA Aplicada al Trabajo - berrycap-ia</p>
+</header>
+
+<div id="aviso-exito" class="aviso-exito" role="status" aria-live="polite">
+  Respuestas exportadas correctamente. Revisa la consola del navegador para ver el JSON.
+</div>
+
+<main>
+
+  <!-- ============================================================
+       CUESTIONARIO A - DIAGNÓSTICO DE CONOCIMIENTOS PREVIOS
+       ============================================================ -->
+  <section class="cuestionario" id="cuestionario-a">
+    <h2>Cuestionario A - Diagnóstico de Conocimientos Previos en IA</h2>
+    <p class="instruccion">
+      <strong>Instrucción:</strong> Marca tu nivel real, no el deseado.<br>
+      <strong>Escala:</strong> 1 = no lo conozco; 2 = he oído hablar; 3 = entiendo el concepto;
+      4 = lo aplico con ayuda; 5 = lo aplico solo.<br>
+      
+    </p>
+
+    <div class="campo">
+      <label class="titulo" for="id-a">Identificación del participante</label>
+      <span class="ayuda">Formato sugerido: Identificación, Cédula, Credencial (ejemplo: 10277376).</span>
+      <input type="text" id="id-a" name="cuestionarioA_id" placeholder="10277376">
+    </div>
+
+    <div class="campo">
+      <label class="titulo" for="nombre-a">Nombre del participante</label>
+      <span class="ayuda">Escribe tu nombre completo.</span>
+      <input type="text" id="nombre-a" name="cuestionarioA_nombre" placeholder="Nombre completo">
+    </div>
+
+    <div class="campo">
+      <label class="titulo">Autoevaluación de conocimientos</label>
+      <span class="ayuda">Marca el nivel que corresponde a tu conocimiento actual.</span>
+
+      <table class="matriz">
+        <thead>
+          <tr>
+            <th>Concepto</th>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+            <th>4</th>
+            <th>5</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A1. Qué es un modelo de lenguaje (LLM)</td>
+            <td><input type="radio" name="a1" value="1"></td>
+            <td><input type="radio" name="a1" value="2"></td>
+            <td><input type="radio" name="a1" value="3"></td>
+            <td><input type="radio" name="a1" value="4"></td>
+            <td><input type="radio" name="a1" value="5"></td>
+          </tr>
+          <tr>
+            <td>A2. Diferencia entre IA tradicional, machine learning e IA generativa</td>
+            <td><input type="radio" name="a2" value="1"></td>
+            <td><input type="radio" name="a2" value="2"></td>
+            <td><input type="radio" name="a2" value="3"></td>
+            <td><input type="radio" name="a2" value="4"></td>
+            <td><input type="radio" name="a2" value="5"></td>
+          </tr>
+          <tr>
+            <td>A3. Qué es un prompt</td>
+            <td><input type="radio" name="a3" value="1"></td>
+            <td><input type="radio" name="a3" value="2"></td>
+            <td><input type="radio" name="a3" value="3"></td>
+            <td><input type="radio" name="a3" value="4"></td>
+            <td><input type="radio" name="a3" value="5"></td>
+          </tr>
+          <tr>
+            <td>A4. Framework Rol + Contexto + Tarea + Formato + Restricciones</td>
+            <td><input type="radio" name="a4" value="1"></td>
+            <td><input type="radio" name="a4" value="2"></td>
+            <td><input type="radio" name="a4" value="3"></td>
+            <td><input type="radio" name="a4" value="4"></td>
+            <td><input type="radio" name="a4" value="5"></td>
+          </tr>
+          <tr>
+            <td>A5. Qué es una alucinación y cómo detectarla</td>
+            <td><input type="radio" name="a5" value="1"></td>
+            <td><input type="radio" name="a5" value="2"></td>
+            <td><input type="radio" name="a5" value="3"></td>
+            <td><input type="radio" name="a5" value="4"></td>
+            <td><input type="radio" name="a5" value="5"></td>
+          </tr>
+          <tr>
+            <td>A6. Qué es un webhook</td>
+            <td><input type="radio" name="a6" value="1"></td>
+            <td><input type="radio" name="a6" value="2"></td>
+            <td><input type="radio" name="a6" value="3"></td>
+            <td><input type="radio" name="a6" value="4"></td>
+            <td><input type="radio" name="a6" value="5"></td>
+          </tr>
+          <tr>
+            <td>A7. Qué es n8n o una herramienta no-code</td>
+            <td><input type="radio" name="a7" value="1"></td>
+            <td><input type="radio" name="a7" value="2"></td>
+            <td><input type="radio" name="a7" value="3"></td>
+            <td><input type="radio" name="a7" value="4"></td>
+            <td><input type="radio" name="a7" value="5"></td>
+          </tr>
+          <tr>
+            <td>A8. Qué es Ollama o un modelo local</td>
+            <td><input type="radio" name="a8" value="1"></td>
+            <td><input type="radio" name="a8" value="2"></td>
+            <td><input type="radio" name="a8" value="3"></td>
+            <td><input type="radio" name="a8" value="4"></td>
+            <td><input type="radio" name="a8" value="5"></td>
+          </tr>
+          <tr>
+            <td>A9. Qué es una API</td>
+            <td><input type="radio" name="a9" value="1"></td>
+            <td><input type="radio" name="a9" value="2"></td>
+            <td><input type="radio" name="a9" value="3"></td>
+            <td><input type="radio" name="a9" value="4"></td>
+            <td><input type="radio" name="a9" value="5"></td>
+          </tr>
+          <tr>
+            <td>A10. Qué es RAG</td>
+            <td><input type="radio" name="a10" value="1"></td>
+            <td><input type="radio" name="a10" value="2"></td>
+            <td><input type="radio" name="a10" value="3"></td>
+            <td><input type="radio" name="a10" value="4"></td>
+            <td><input type="radio" name="a10" value="5"></td>
+          </tr>
+          <tr>
+            <td>A11. Qué es MLOps o monitorización de modelos</td>
+            <td><input type="radio" name="a11" value="1"></td>
+            <td><input type="radio" name="a11" value="2"></td>
+            <td><input type="radio" name="a11" value="3"></td>
+            <td><input type="radio" name="a11" value="4"></td>
+            <td><input type="radio" name="a11" value="5"></td>
+          </tr>
+          <tr>
+            <td>A12. Qué es un dato personal o sensible (PII)</td>
+            <td><input type="radio" name="a12" value="1"></td>
+            <td><input type="radio" name="a12" value="2"></td>
+            <td><input type="radio" name="a12" value="3"></td>
+            <td><input type="radio" name="a12" value="4"></td>
+            <td><input type="radio" name="a12" value="5"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="campo">
+      <label class="titulo" for="comentario-a">Comentario opcional</label>
+      <span class="ayuda">Cualquier concepto que quieras aclarar antes de iniciar.</span>
+      <textarea id="comentario-a" name="cuestionarioA_comentario"></textarea>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CUESTIONARIO B - EXPECTATIVAS Y OBJETIVOS
+       ============================================================ -->
+  <section class="cuestionario" id="cuestionario-b">
+    <h2>Cuestionario B - Expectativas y Objetivos</h2>
+    <p class="instruccion">
+      <strong>Instrucción:</strong> Responde con sinceridad. Tus respuestas ayudan a personalizar el programa.
+      
+    </p>
+
+    <div class="campo">
+      <label class="titulo" for="b1">B1. ¿Qué resultado concreto esperas obtener al finalizar el programa?</label>
+      <span class="ayuda">Máximo 30 palabras.</span>
+      <textarea id="b1" name="b1" maxlength="400"></textarea>
+    </div>
+
+    <div class="campo">
+      <label class="titulo" for="b2">B2. ¿Qué tarea de tu trabajo te gustaría automatizar o asistir con IA?</label>
+      <span class="ayuda">Máximo 50 palabras.</span>
+      <textarea id="b2" name="b2" maxlength="600"></textarea>
+    </div>
+
+    <div class="campo">
+      <label class="titulo" for="b3">B3. ¿Qué obstáculo prevés para completar el programa?</label>
+      <span class="ayuda">Máximo 30 palabras.</span>
+      <textarea id="b3" name="b3" maxlength="400"></textarea>
+    </div>
+
+    <div class="campo">
+      <label class="titulo">B4. ¿Cuál es tu nivel de comodidad con herramientas técnicas nuevas?</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="b4" value="Muy incómodo"> Muy incómodo</label>
+        <label><input type="radio" name="b4" value="Incómodo"> Incómodo</label>
+        <label><input type="radio" name="b4" value="Neutral"> Neutral</label>
+        <label><input type="radio" name="b4" value="Cómodo"> Cómodo</label>
+        <label><input type="radio" name="b4" value="Muy cómodo"> Muy cómodo</label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="titulo">B5. ¿Prefieres aprender con ejemplos de tu área o con ejemplos genéricos?</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="b5" value="Solo de mi área"> Solo de mi área</label>
+        <label><input type="radio" name="b5" value="Mayormente de mi área"> Mayormente de mi área</label>
+        <label><input type="radio" name="b5" value="Indiferente"> Indiferente</label>
+        <label><input type="radio" name="b5" value="Mayormente genéricos"> Mayormente genéricos</label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="titulo">B6. ¿Estás dispuesto a invertir 2-3 horas semanales durante 6-8 semanas?</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="b6" value="Sí"> Sí</label>
+        <label><input type="radio" name="b6" value="Sí, con flexibilidad"> Sí, con flexibilidad</label>
+        <label><input type="radio" name="b6" value="No estoy seguro"> No estoy seguro</label>
+        <label><input type="radio" name="b6" value="No"> No</label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CUESTIONARIO C - DISPONIBILIDAD Y RESTRICCIONES
+       ============================================================ -->
+  <section class="cuestionario" id="cuestionario-c">
+    <h2>Cuestionario C - Disponibilidad y Restricciones</h2>
+    <p class="instruccion">
+      <strong>Instrucción:</strong> Este cuestionario se aplica durante el Módulo 0 para ajustar la logística del grupo.
+      
+    </p>
+
+    <div class="campo">
+      <label class="titulo">C1. Tiempo semanal disponible real para el programa</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="c1" value="Menos de 1 hora"> Menos de 1 hora</label>
+        <label><input type="radio" name="c1" value="1-2 horas"> 1-2 horas</label>
+        <label><input type="radio" name="c1" value="2-3 horas"> 2-3 horas</label>
+        <label><input type="radio" name="c1" value="Más de 3 horas"> Más de 3 horas</label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="titulo">C2. ¿Tu equipo de trabajo puede ejecutar Ollama o n8n localmente?</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="c2" value="Sí"> Sí</label>
+        <label><input type="radio" name="c2" value="No"> No</label>
+        <label><input type="radio" name="c2" value="No sé"> No sé</label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="titulo">C3. ¿Tienes permiso para crear cuentas en servicios externos (DeepSeek, Telegram, etc.)?</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="c3" value="Sí"> Sí</label>
+        <label><input type="radio" name="c3" value="No"> No</label>
+        <label><input type="radio" name="c3" value="Con aprobación previa"> Con aprobación previa</label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="titulo">C4. ¿Tu trabajo diario involucra datos personales, financieros, de salud o legalmente regulados?</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="c4" value="Sí"> Sí</label>
+        <label><input type="radio" name="c4" value="No"> No</label>
+        <label><input type="radio" name="c4" value="No sé"> No sé</label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="titulo">C5. Si la respuesta anterior fue "Sí", ¿estás dispuesto a que esos datos solo se procesen en un modelo local (nunca en API externa)?</label>
+      <div class="opciones-verticales">
+        <label><input type="radio" name="c5" value="Sí"> Sí</label>
+        <label><input type="radio" name="c5" value="No"> No</label>
+        <label><input type="radio" name="c5" value="Necesito discutirlo con mi responsable"> Necesito discutirlo con mi responsable</label>
+        <label><input type="radio" name="c5" value="No aplica"> No aplica</label>
+      </div>
+    </div>
+
+    <div class="campo">
+      <label class="titulo" for="c6">C6. ¿Qué limitación logística debes declarar?</label>
+      <span class="ayuda">Horario, ubicación, equipo, idioma, u otra.</span>
+      <textarea id="c6" name="c6"></textarea>
+    </div>
+  </section>
+
+</main>
+
+<div class="acciones">
+  <button type="button" class="secundario" onclick="window.print()">Imprimir</button>
+  <button type="button" class="secundario" onclick="limpiarTodo()">Limpiar</button>
+  <button type="button" class="exportar" onclick="exportarExcel()">Exportar Excel</button>
+  <button type="button" class="exportar" onclick="exportarPDF()">Exportar PDF</button>
+  <button type="button" class="exportar" onclick="exportarWord()">Exportar Word</button>
+  <button type="button" class="primario" onclick="exportarRespuestas()">Exportar JSON</button>
+</div>
+
+<script>
+  /**
+   * Recolecta todas las respuestas del formulario y las devuelve como objeto JSON.
+   */
+  function recolectarRespuestas() {
+    var datos = {
+      cuestionarioA: { id: '', nombre: '', respuestas: {}, comentario: '' },
+      cuestionarioB: { respuestas: {} },
+      cuestionarioC: { respuestas: {} },
+      metadatos: {
+        fecha: new Date().toISOString(),
+        navegador: navigator.userAgent,
+        version: 'berrycap-ia-cuestionarios-2.0'
+      }
+    };
+
+    // Cuestionario A
+    datos.cuestionarioA.id = obtenerValorTexto('id-a');
+    datos.cuestionarioA.nombre = obtenerValorTexto('nombre-a');
+    for (var i = 1; i <= 12; i++) {
+      datos.cuestionarioA.respuestas['a' + i] = obtenerValorRadio('a' + i);
+    }
+    datos.cuestionarioA.comentario = obtenerValorTexto('comentario-a');
+
+    // Cuestionario B
+    datos.cuestionarioB.respuestas.b1 = obtenerValorTexto('b1');
+    datos.cuestionarioB.respuestas.b2 = obtenerValorTexto('b2');
+    datos.cuestionarioB.respuestas.b3 = obtenerValorTexto('b3');
+    datos.cuestionarioB.respuestas.b4 = obtenerValorRadio('b4');
+    datos.cuestionarioB.respuestas.b5 = obtenerValorRadio('b5');
+    datos.cuestionarioB.respuestas.b6 = obtenerValorRadio('b6');
+
+    // Cuestionario C
+    datos.cuestionarioC.respuestas.c1 = obtenerValorRadio('c1');
+    datos.cuestionarioC.respuestas.c2 = obtenerValorRadio('c2');
+    datos.cuestionarioC.respuestas.c3 = obtenerValorRadio('c3');
+    datos.cuestionarioC.respuestas.c4 = obtenerValorRadio('c4');
+    datos.cuestionarioC.respuestas.c5 = obtenerValorRadio('c5');
+    datos.cuestionarioC.respuestas.c6 = obtenerValorTexto('c6');
+
+    return datos;
+  }
+
+  function obtenerValorTexto(id) {
+    var el = document.getElementById(id);
+    if (el && typeof el.value === 'string') {
+      return el.value.trim();
+    }
+    var porNombre = document.querySelector('[name="' + id + '"]');
+    if (porNombre) {
+      return porNombre.value.trim();
+    }
+    return '';
+  }
+
+  function obtenerValorRadio(name) {
+    var seleccionado = document.querySelector('input[name="' + name + '"]:checked');
+    return seleccionado ? seleccionado.value : '';
+  }
+
+  function exportarRespuestas() {
+    var datos = recolectarRespuestas();
+    var json = JSON.stringify(datos, null, 2);
+
+    console.log('=== Respuestas berrycap-ia ===');
+    console.log(json);
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(json).then(function () {
+        mostrarAvisoExito();
+      }).catch(function () {
+        mostrarAvisoExito();
+      });
+    } else {
+      mostrarAvisoExito();
+    }
+  }
+
+  function mostrarAvisoExito() {
+    var aviso = document.getElementById('aviso-exito');
+    aviso.classList.add('activo');
+    setTimeout(function () {
+      aviso.classList.remove('activo');
+    }, 4000);
+  }
+
+  function limpiarTodo() {
+    if (!confirm('Se borrarán todas las respuestas. ¿Continuar?')) {
+      return;
+    }
+    var formularios = document.querySelectorAll('input, textarea');
+    formularios.forEach(function (el) {
+      if (el.type === 'radio' || el.type === 'checkbox') {
+        el.checked = false;
+      } else {
+        el.value = '';
+      }
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ---------- Exportar a Excel (.xls) ----------
+  function exportarExcel() {
+    var datos = recolectarRespuestas();
+    var html = construirTablaHTML(datos, 'Cuestionarios Blueberry Group Corp.');
+    var blob = new Blob(['\ufeff' + html], { type: 'application/vnd.ms-excel' });
+    descargarBlob(blob, 'blueberry-group-cuestionarios.xls');
+  }
+
+  // ---------- Exportar a Word (.doc) ----------
+  function exportarWord() {
+    var datos = recolectarRespuestas();
+    var html = construirTablaHTML(datos, 'Cuestionarios Blueberry Group Corp.');
+    var contenido = '<html xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+      'xmlns:w="urn:schemas-microsoft-com:office:word" ' +
+      'xmlns="http://www.w3.org/TR/REC-html40">' +
+      '<head><meta charset="utf-8"><title>Cuestionarios Blueberry Group Corp.</title></head>' +
+      '<body>' + html + '</body></html>';
+    var blob = new Blob(['\ufeff' + contenido], { type: 'application/msword' });
+    descargarBlob(blob, 'blueberry-group-cuestionarios.doc');
+  }
+
+  // ---------- Exportar a PDF ----------
+  function exportarPDF() {
+    var datos = recolectarRespuestas();
+    var html = construirTablaHTML(datos, 'Cuestionarios Blueberry Group Corp.');
+    var ventana = window.open('', '_blank');
+    if (!ventana) {
+      alert('Permite las ventanas emergentes para exportar a PDF.');
+      return;
+    }
+    ventana.document.write('<html><head><meta charset="utf-8">' +
+      '<title>Cuestionarios Blueberry Group Corp.</title>' +
+      '<style>' +
+      'body{font-family:Segoe UI,Arial,sans-serif;padding:20px;color:#1c4583;}' +
+      'h1{color:#2862b9;border-bottom:2px solid #4d9a4e;padding-bottom:8px;}' +
+      'h2{color:#2862b9;margin-top:24px;}' +
+      'table{border-collapse:collapse;width:100%;margin-bottom:16px;font-size:13px;}' +
+      'th{background:#2862b9;color:#fff;padding:8px;text-align:left;}' +
+      'td{padding:6px 8px;border-bottom:1px solid #d0d9e8;}' +
+      'tr:nth-child(even){background:#f8fafd;}' +
+      '.etiqueta{font-weight:600;color:#1c4583;}' +
+      '@media print{body{padding:0;}}' +
+      '</style></head><body>' + html +
+      '<script>window.onload=function(){window.print();}<\/script>' +
+      '</body></html>');
+    ventana.document.close();
+  }
+
+  // ---------- Construir tabla HTML con los datos ----------
+  function construirTablaHTML(datos, titulo) {
+    var html = '<h1>' + titulo + '</h1>';
+    html += '<p><strong>Fecha:</strong> ' + new Date(datos.metadatos.fecha).toLocaleString() + '</p>';
+
+    // Cuestionario A
+    html += '<h2>Cuestionario A - Diagnóstico de Conocimientos Previos</h2>';
+    html += '<table><tr><th>Campo</th><th>Respuesta</th></tr>';
+    html += '<tr><td class="etiqueta">Identificación</td><td>' + escaparHTML(datos.cuestionarioA.id || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">Nombre</td><td>' + escaparHTML(datos.cuestionarioA.nombre || '—') + '</td></tr>';
+    for (var i = 1; i <= 12; i++) {
+      html += '<tr><td class="etiqueta">A' + i + '</td><td>' + escaparHTML(datos.cuestionarioA.respuestas['a' + i] || '—') + '</td></tr>';
+    }
+    html += '<tr><td class="etiqueta">Comentario</td><td>' + escaparHTML(datos.cuestionarioA.comentario || '—') + '</td></tr>';
+    html += '</table>';
+
+    // Cuestionario B
+    html += '<h2>Cuestionario B - Expectativas y Objetivos</h2>';
+    html += '<table><tr><th>Pregunta</th><th>Respuesta</th></tr>';
+    html += '<tr><td class="etiqueta">B1. Resultado esperado</td><td>' + escaparHTML(datos.cuestionarioB.respuestas.b1 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">B2. Tarea a automatizar</td><td>' + escaparHTML(datos.cuestionarioB.respuestas.b2 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">B3. Obstáculo previsto</td><td>' + escaparHTML(datos.cuestionarioB.respuestas.b3 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">B4. Comodidad con herramientas técnicas</td><td>' + escaparHTML(datos.cuestionarioB.respuestas.b4 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">B5. Preferencia de ejemplos</td><td>' + escaparHTML(datos.cuestionarioB.respuestas.b5 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">B6. Disposición de tiempo</td><td>' + escaparHTML(datos.cuestionarioB.respuestas.b6 || '—') + '</td></tr>';
+    html += '</table>';
+
+    // Cuestionario C
+    html += '<h2>Cuestionario C - Disponibilidad y Restricciones</h2>';
+    html += '<table><tr><th>Pregunta</th><th>Respuesta</th></tr>';
+    html += '<tr><td class="etiqueta">C1. Tiempo semanal disponible</td><td>' + escaparHTML(datos.cuestionarioC.respuestas.c1 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">C2. Ejecución local de Ollama/n8n</td><td>' + escaparHTML(datos.cuestionarioC.respuestas.c2 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">C3. Permiso para cuentas externas</td><td>' + escaparHTML(datos.cuestionarioC.respuestas.c3 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">C4. Manejo de datos regulados</td><td>' + escaparHTML(datos.cuestionarioC.respuestas.c4 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">C5. Procesamiento local de datos sensibles</td><td>' + escaparHTML(datos.cuestionarioC.respuestas.c5 || '—') + '</td></tr>';
+    html += '<tr><td class="etiqueta">C6. Limitación logística</td><td>' + escaparHTML(datos.cuestionarioC.respuestas.c6 || '—') + '</td></tr>';
+    html += '</table>';
+
+    return html;
+  }
+
+  function escaparHTML(texto) {
+    if (!texto) return '';
+    return String(texto)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;')
+      .replace(/\n/g, '<br>');
+  }
+
+  function descargarBlob(blob, nombreArchivo) {
+    var enlace = document.createElement('a');
+    enlace.href = URL.createObjectURL(blob);
+    enlace.download = nombreArchivo;
+    document.body.appendChild(enlace);
+    enlace.click();
+    document.body.removeChild(enlace);
+    URL.revokeObjectURL(enlace.href);
+  }
+</script>
+
+</body>
+</html>
